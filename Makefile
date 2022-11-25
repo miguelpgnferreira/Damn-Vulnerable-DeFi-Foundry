@@ -15,7 +15,9 @@ remove :;
 # Install dependencies
 install :;
 	@forge install foundry-rs/forge-std@master --no-commit && \
-	forge install openzeppelin/openzeppelin-contracts@master --no-commit
+	forge install openzeppelin/openzeppelin-contracts@master --no-commit && \
+	forge install openzeppelin/openzeppelin-contracts-upgradeable@master --no-commit && \
+	forge install safe-global/safe-contracts@main --no-commit
 
 # Update dependencies
 update :;
@@ -23,7 +25,8 @@ update :;
 
 # Build the project
 build :;
-	@forge build
+	@forge build && \
+	FOUNDRY_PROFILE=0_6_x forge build
 
 # Format code
 format:
