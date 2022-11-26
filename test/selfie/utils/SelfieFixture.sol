@@ -9,25 +9,21 @@ import "src/src-default/DamnValuableTokenSnapshot.sol";
 import "forge-std/Test.sol";
 
 contract SelfieFixture is Test {
-
     //
     // Constants
     //
-
     uint256 public constant TOKEN_INITIAL_SUPPLY = 2_000_000 ether;
     uint256 public constant TOKENS_IN_POOL = 1_500_000 ether;
 
     //
     // Token contracts
     //
-
     DamnValuableTokenSnapshot public token;
     SimpleGovernance public governance;
 
     //
     // Pool
     //
-
     SelfiePool public pool;
 
     // Attacker address

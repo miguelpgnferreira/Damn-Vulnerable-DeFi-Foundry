@@ -6,7 +6,6 @@ import "./utils/SelfieFixture.sol";
 import "src/src-default/attacker-contracts/AttackSelfie.sol";
 
 contract SelfieTest is SelfieFixture {
-
     AttackSelfie public attackContract;
 
     function setUp() public override {
@@ -14,7 +13,6 @@ contract SelfieTest is SelfieFixture {
     }
 
     function test_selfie() public {
-
         // Start acting as the attacker for the remainder of the exploit
         vm.startPrank(attacker);
 
