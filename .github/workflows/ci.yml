@@ -39,6 +39,7 @@ jobs:
         run: |
           forge --version
           forge build
+          FOUNDRY_PROFILE=0_6_x forge build
         id: build
 
       - name: Run the tests
