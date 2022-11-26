@@ -10,16 +10,15 @@ import "../DamnValuableToken.sol";
  * @author Damn Vulnerable DeFi (https://damnvulnerabledefi.xyz)
  */
 contract PuppetPool is ReentrancyGuard {
-
     using Address for address payable;
 
     mapping(address => uint256) public deposits;
     address public immutable uniswapPair;
     DamnValuableToken public immutable token;
-    
+
     event Borrowed(address indexed account, uint256 depositRequired, uint256 borrowAmount);
 
-    constructor (address tokenAddress, address uniswapPairAddress) {
+    constructor(address tokenAddress, address uniswapPairAddress) {
         token = DamnValuableToken(tokenAddress);
         uniswapPair = uniswapPairAddress;
     }
@@ -27,9 +26,9 @@ contract PuppetPool is ReentrancyGuard {
     // Allows borrowing `borrowAmount` of tokens by first depositing two times their value in ETH
     function borrow(uint256 borrowAmount) public payable nonReentrant {
         uint256 depositRequired = calculateDepositRequired(borrowAmount);
-        
+
         require(msg.value >= depositRequired, "Not depositing enough collateral");
-        
+
         if (msg.value > depositRequired) {
             payable(msg.sender).sendValue(msg.value - depositRequired);
         }
@@ -51,8 +50,7 @@ contract PuppetPool is ReentrancyGuard {
         return uniswapPair.balance * (10 ** 18) / token.balanceOf(uniswapPair);
     }
 
-     /**
-     ... functions to deposit, redeem, repay, calculate interest, and so on ...
+    /**
+     * ... functions to deposit, redeem, repay, calculate interest, and so on ...
      */
-
 }

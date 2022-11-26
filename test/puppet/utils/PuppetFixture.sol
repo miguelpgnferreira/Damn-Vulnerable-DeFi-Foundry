@@ -9,29 +9,25 @@ import "src/src-default/DamnValuableToken.sol";
 import "forge-std/Test.sol";
 
 contract PuppetFixture is Test {
-
     //
     // Constants
     //
-
     uint256 public constant UNISWAP_INITIAL_TOKEN_RESERVE = 10 ether;
     uint256 public constant UNISWAP_INITIAL_ETH_RESERVE = 10 ether;
 
-    uint256 public constant ATTACKER_INITIAL_TOKEN_BALANCE = 1_000 ether;
+    uint256 public constant ATTACKER_INITIAL_TOKEN_BALANCE = 1000 ether;
     uint256 public constant ATTACKER_INITIAL_ETH_BALANCE = 25 ether;
     uint256 public constant POOL_INITIAL_TOKEN_BALANCE = 100_000 ether;
 
     //
     // Token contracts
     //
-
     WETH9 public weth;
     DamnValuableToken public token;
 
     //
     // Uniswap V1 contracts
     //
-
     address public exchangeTemplate;
     address public factory;
     address public exchange;
@@ -39,7 +35,6 @@ contract PuppetFixture is Test {
     //
     // Pool
     //
-
     PuppetPool public pool;
 
     // Attacker address
@@ -83,17 +78,18 @@ contract PuppetFixture is Test {
 
         // Add liquidity to the pool
         token.approve(exchange, UNISWAP_INITIAL_TOKEN_RESERVE);
-        exchange.call{value: UNISWAP_INITIAL_ETH_RESERVE}(abi.encodeWithSignature(
-            "addLiquidity(uint256,uint256,uint256)", 
-            0, 
-            UNISWAP_INITIAL_TOKEN_RESERVE, 
-            block.timestamp * 2
-        ));
+        exchange.call{value: UNISWAP_INITIAL_ETH_RESERVE}(
+            abi.encodeWithSignature(
+                "addLiquidity(uint256,uint256,uint256)", 0, UNISWAP_INITIAL_TOKEN_RESERVE, block.timestamp * 2
+            )
+        );
 
         // Ensure Uniswap V1 works as expected
         (, data) = exchange.call(abi.encodeWithSignature("getTokenToEthInputPrice(uint256)", 1 ether));
         uint256 price = abi.decode(data, (uint256));
-        assertEq(price, calculateTokenToEthInputPrice(1 ether, UNISWAP_INITIAL_TOKEN_RESERVE, UNISWAP_INITIAL_ETH_RESERVE));
+        assertEq(
+            price, calculateTokenToEthInputPrice(1 ether, UNISWAP_INITIAL_TOKEN_RESERVE, UNISWAP_INITIAL_ETH_RESERVE)
+        );
 
         // Setup initial token balances
         token.transfer(attacker, ATTACKER_INITIAL_TOKEN_BALANCE);
@@ -109,14 +105,11 @@ contract PuppetFixture is Test {
     //
     // Helper functions
     //
-    
-    function calculateTokenToEthInputPrice(
-        uint256 tokensSold, 
-        uint256 tokensInReserve, 
-        uint256 etherInReserve
-    ) public pure returns (uint256){
-
+    function calculateTokenToEthInputPrice(uint256 tokensSold, uint256 tokensInReserve, uint256 etherInReserve)
+        public
+        pure
+        returns (uint256)
+    {
         return tokensSold * 997 * etherInReserve / (tokensInReserve * 1000 + tokensSold * 997);
     }
-
 }
