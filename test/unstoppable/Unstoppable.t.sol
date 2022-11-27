@@ -8,7 +8,7 @@ contract UnstoppableTest is UnstoppableFixture {
         super.setUp();
     }
 
-    function test_flashPool() public {
+    function test_unstoppable() public {
         // Start acting as the attacker for the remainder of the exploit
         vm.startPrank(attacker);
 

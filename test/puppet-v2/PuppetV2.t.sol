@@ -10,7 +10,7 @@ contract PuppetV2Test is PuppetV2Fixture {
         super.setUp();
     }
 
-    function _puppet_v2() public {
+    function test_puppet_v2() public {
         // Start acting as the attacker for the remainder of the exploit
         vm.startPrank(attacker);
 

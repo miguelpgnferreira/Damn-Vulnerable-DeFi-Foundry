@@ -12,7 +12,7 @@ contract NaiveReceiverTest is NaiveReceiverFixture {
         super.setUp();
     }
 
-    function test_naive_receiver() public {
+    function test_naiveReceiver() public {
         // Act as the attacker for the remainder of the exploit
         vm.startPrank(attacker);
 
